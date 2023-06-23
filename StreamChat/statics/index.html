@@ -1,0 +1,60 @@
+<html>
+
+<head>
+    <title>Streaming Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body>
+    <div id="app" class="max-w-xl mx-auto">
+        <h1 class="text-4xl my-10">Streaming Chat</h1>
+        <div>
+            <form @submit.prevent="onSubmit">
+                <input
+                    class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    v-model="query" type="text" name="question" placeholder="Type your question here" />
+                <button
+                    class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                    type="submit">Ask</button>
+            </form>
+        </div>
+        <div class="mt-4">
+            <p class="font-light text-lg">{{ answer }}</p>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                query: '',
+                answer: ''
+            },
+            methods: {
+                onSubmit: async function () {
+                    this.answer = '';
+                    const response = await fetch("/ask", {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            question: this.query,
+                        }),
+                    });
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    while (true) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+
+                        this.answer += decoder.decode(value);
+                    }
+                },
+            },
+        });
+    </script>
+</body>
+
+</html>
