@@ -1,4 +1,4 @@
-from langchain.llms import Bedrock
+from langchain_community.llms import Bedrock
 from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
