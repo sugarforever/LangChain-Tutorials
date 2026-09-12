@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI
 from fastapi.responses import FileResponse, StreamingResponse
 from langchain.callbacks import AsyncIteratorCallbackHandler
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
 
 load_dotenv()
 async def wait_done(fn: Awaitable, event: asyncio.Event):

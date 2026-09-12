@@ -1,7 +1,7 @@
 from dotenv import load_dotenv
-from langchain.chat_models import ChatOpenAI
+from langchain_openai import ChatOpenAI
 from langchain.callbacks.streaming_aiter import AsyncIteratorCallbackHandler
-from langchain.schema import HumanMessage
+from langchain_core.messages import HumanMessage
 import asyncio
 import sys
 

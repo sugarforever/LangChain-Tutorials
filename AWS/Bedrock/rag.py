@@ -1,6 +1,6 @@
 from langchain.retrievers import AmazonKnowledgeBasesRetriever
 from langchain.chains import RetrievalQA
-from langchain.llms import Bedrock
+from langchain_community.llms import Bedrock
 
 retriever = AmazonKnowledgeBasesRetriever(
     credentials_profile_name="william",
